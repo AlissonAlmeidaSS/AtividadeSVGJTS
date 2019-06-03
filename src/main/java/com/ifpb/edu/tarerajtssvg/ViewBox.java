@@ -14,8 +14,8 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class ViewBox {
     
-    private Geometry geom1;
-    private Geometry geom2;
+    private final Geometry geom1;
+    private final Geometry geom2;
 
     public ViewBox(Geometry geom1, Geometry geom2) {
         this.geom1 = geom1;

@@ -7,14 +7,11 @@ package com.ifpb.edu.tarerajtssvg;
 import com.vividsolutions.jts.geom.Geometry;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.nio.file.Paths;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
@@ -31,17 +28,16 @@ public class TranformandoSVG {
             String svg_URI_input = GenerateSVG(a, b).getPath();
             TranscoderInput input_svg_image = new TranscoderInput(svg_URI_input);      
             
-            OutputStream png_ostream = new FileOutputStream(NAME_FILE + ".png");
-            TranscoderOutput output_png_image = new TranscoderOutput(png_ostream); 
-            
-            PNGTranscoder my_converter = new PNGTranscoder();        
-            
-            my_converter.transcode(input_svg_image, output_png_image);
-            
-            png_ostream.flush();
-            png_ostream.close(); 
+            try (OutputStream png_ostream = new FileOutputStream(NAME_FILE + ".png")) {
+                TranscoderOutput output_png_image = new TranscoderOutput(png_ostream);
+                
+                PNGTranscoder my_converter = new PNGTranscoder();
+                
+                my_converter.transcode(input_svg_image, output_png_image);
+                
+                png_ostream.flush();
+            } 
         } catch (IOException | TranscoderException ex) {
-            ex.printStackTrace();
             return null;
         }
         
@@ -83,12 +79,10 @@ public class TranformandoSVG {
             
             file.createNewFile();
         
-            BufferedWriter writer = new BufferedWriter(new PrintWriter(new FileWriter(file, true), true));
-            
-            writer.write(builder.toString());
-            writer.close();
+            try (BufferedWriter writer = new BufferedWriter(new PrintWriter(new FileWriter(file, true), true))) {
+                writer.write(builder.toString());
+            }
         } catch (IOException ex) {
-            ex.printStackTrace();
         }
         
         

@@ -1,11 +1,8 @@
 package com.ifpb.edu.tarerajtssvg;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
-import com.ifpb.edu.tarerajtssvg.MetodosGeometry;
-import com.ifpb.edu.tarerajtssvg.TranformandoSVG;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -132,7 +129,6 @@ public class Home extends javax.swing.JFrame {
             A = reader.read(jTextField1.getText());
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Geometria A Invalida", "Dados Invalidos", JOptionPane.INFORMATION_MESSAGE);
-            ex.printStackTrace();
             return;
         }
 
@@ -140,14 +136,12 @@ public class Home extends javax.swing.JFrame {
             B = reader.read(jTextField2.getText());
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Geometria B Invalida", "Dados Invalidos", JOptionPane.INFORMATION_MESSAGE);
-            ex.printStackTrace();
             return;
         }
         
        try {       
             jLabel3.setIcon(new ImageIcon(ImageIO.read(TranformandoSVG.GeneratePNG(A, B))));
        } catch (IOException ex) {
-           ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Problema ao Gerar Imagem", "Error", JOptionPane.ERROR_MESSAGE);
        }
        
@@ -202,10 +196,8 @@ public class Home extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Home().setVisible(true);
         });
     }
 

@@ -18,7 +18,7 @@ public class MetodosGeometry {
         return a.getArea();        
     }
     
-    public double areab(Geometry b) {
+    public double areaB(Geometry b) {
         return b.getArea();        
     }
     
